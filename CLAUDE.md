@@ -9,16 +9,18 @@ DataForge Studio — local-first visual ETL transformation designer. Works entir
 ## Commands
 
 ```bash
-make dev-backend    # cd backend && uvicorn app.main:app --reload --port 8000
+make dev-backend    # cd backend && venv/bin/uvicorn app.main:app --reload --port 8000
 make dev-frontend   # cd frontend && npm run dev
-make test           # cd backend && pytest tests/ -v
+make test           # cd backend && venv/bin/python -m pytest tests/ -v
 make clean          # remove __pycache__ and .pytest_cache recursively
 ```
+
+The venv lives at `backend/venv/`. `pytest` must be installed into it (`venv/bin/pip install pytest`). All requirements are already installed.
 
 Alternatively, from the `backend/` directory:
 
 ```bash
-python run.py       # starts uvicorn with startup banner
+venv/bin/python run.py       # starts uvicorn with startup banner
 ```
 
 ## Architecture
@@ -37,7 +39,10 @@ Key model hierarchy:
 
 `backend/app/main.py` — FastAPI entrypoint. CORS is open to `localhost:3000` and `localhost:5173`. Lifespan startup logs the active LLM provider and projects directory. All routes live under `/api/{resource}`.
 
-Router files under `backend/app/api/` are currently stubs (`projects`, `tables`, `execute`, `compile`, `llm`).
+Router files under `backend/app/api/`:
+- `projects.py` — CRUD for projects and table creation, mounted at `/api/projects`
+- `tables.py` — table spec/transformations/data, also mounted at `/api/projects` so full URLs are `/api/projects/{project_name}/tables/{layer}/{table_name}/...`
+- `execute.py`, `compile.py`, `llm.py` — stubs
 
 LLM provider implementations will live in `backend/app/services/llm/providers/`. The active provider is selected via the `LLM_PROVIDER` env var (default: `phi3`). Supported options: `phi3` (local), `ollama`, `openai`-compatible.
 

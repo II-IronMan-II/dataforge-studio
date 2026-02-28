@@ -55,7 +55,7 @@ async def health():
 
 
 app.include_router(projects.router, prefix="/api/projects")
-app.include_router(tables.router, prefix="/api/tables")
+app.include_router(tables.router, prefix="/api/projects")
 app.include_router(execute.router, prefix="/api/execute")
 app.include_router(compile.router, prefix="/api/compile")
 app.include_router(llm.router, prefix="/api/llm")
