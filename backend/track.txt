@@ -1,0 +1,13 @@
+I am building DataForge Studio — open source visual 
+ETL transformation designer. Zero data exposure. 
+AI only generates synthetic data.
+
+Current state:
+- Session 1 complete: models, main, env, makefile
+- Session 2 complete: ProjectManager, project/table APIs
+- Session 3 complete: DuckDB executor
+- Session 4 complete: template library, compiler
+- 21/21 tests passing
+- Repo: github.com/II-IronMan-II/dataforge-studio
+
+Ready for Session 5 — LLM provider system.
