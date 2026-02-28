@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+pydantic
+duckdb
+pandas
+pyarrow
+python-dotenv
+httpx
+openpyxl
+transformers
+torch
+accelerate
