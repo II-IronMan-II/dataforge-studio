@@ -11,3 +11,7 @@ Current state:
 - Repo: github.com/II-IronMan-II/dataforge-studio
 
 Ready for Session 5 — LLM provider system.
+
+Day 1 : Claude Code : Resume this session with:                                                                                                                                                                
+claude --resume 93a7c614-80fb-4380-b706-6118e7f97e59 
+
