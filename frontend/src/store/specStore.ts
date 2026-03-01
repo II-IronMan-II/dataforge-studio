@@ -7,6 +7,7 @@ interface SpecState {
   currentTable: { name: string; layer: string } | null;
   columns: Column[];
   notes: Record<string, string>;
+  tableList: Record<string, string[]>;
   isSaving: boolean;
   isLoading: boolean;
   error: string | null;
@@ -23,6 +24,8 @@ interface SpecState {
   updateColumnNote: (columnName: string, note: string) => void;
   saveTransformations: () => Promise<void>;
   loadTableSpec: (projectName: string, layer: string, tableName: string) => Promise<void>;
+  loadTableList: (projectName: string) => Promise<void>;
+  switchTable: (projectName: string, layer: string, tableName: string) => Promise<void>;
 }
 
 export const useSpecStore = create<SpecState>()((set, get) => ({
@@ -30,6 +33,7 @@ export const useSpecStore = create<SpecState>()((set, get) => ({
   currentTable: null,
   columns: [],
   notes: {},
+  tableList: { bronze: [], silver: [], gold: [] },
   isSaving: false,
   isLoading: false,
   error: null,
@@ -80,6 +84,30 @@ export const useSpecStore = create<SpecState>()((set, get) => ({
   },
 
   async loadTableSpec(projectName, layer, tableName) {
+    set({ isLoading: true, error: null });
+    try {
+      const spec = await api.getTableSpec(projectName, layer, tableName);
+      set({
+        columns: spec.columns,
+        notes: spec.notes,
+        currentTable: { name: tableName, layer },
+        isLoading: false,
+      });
+    } catch (err) {
+      set({ isLoading: false, error: String(err) });
+    }
+  },
+
+  async loadTableList(projectName) {
+    try {
+      const list = await api.listTables(projectName);
+      set({ tableList: list });
+    } catch (err) {
+      set({ error: String(err) });
+    }
+  },
+
+  async switchTable(projectName, layer, tableName) {
     set({ isLoading: true, error: null });
     try {
       const spec = await api.getTableSpec(projectName, layer, tableName);
