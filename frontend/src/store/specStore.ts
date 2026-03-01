@@ -2,12 +2,19 @@ import { create } from 'zustand';
 import type { Column, ColumnTransformations, ProjectConfig } from '../types/spec';
 import * as api from '../utils/api';
 
+export interface CompiledOutput {
+  sql: unknown;
+  pyspark: unknown;
+  dbt: unknown;
+}
+
 interface SpecState {
   currentProject: ProjectConfig | null;
   currentTable: { name: string; layer: string } | null;
   columns: Column[];
   notes: Record<string, string>;
   tableList: Record<string, string[]>;
+  compiledOutput: CompiledOutput | null;
   isSaving: boolean;
   isLoading: boolean;
   error: string | null;
@@ -22,6 +29,7 @@ interface SpecState {
     value: ColumnTransformations[keyof ColumnTransformations],
   ) => void;
   updateColumnNote: (columnName: string, note: string) => void;
+  setCompiledOutput: (output: CompiledOutput | null) => void;
   saveTransformations: () => Promise<void>;
   loadTableSpec: (projectName: string, layer: string, tableName: string) => Promise<void>;
   loadTableList: (projectName: string) => Promise<void>;
@@ -34,6 +42,7 @@ export const useSpecStore = create<SpecState>()((set, get) => ({
   columns: [],
   notes: {},
   tableList: { bronze: [], silver: [], gold: [] },
+  compiledOutput: null,
   isSaving: false,
   isLoading: false,
   error: null,
@@ -64,6 +73,10 @@ export const useSpecStore = create<SpecState>()((set, get) => ({
     set(state => ({
       notes: { ...state.notes, [columnName]: note },
     }));
+  },
+
+  setCompiledOutput(output) {
+    set({ compiledOutput: output });
   },
 
   async saveTransformations() {

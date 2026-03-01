@@ -5,6 +5,7 @@ import SchemaInput from './components/SchemaInput';
 import TableSidebar from './components/TableSidebar';
 import AddTableModal from './components/AddTableModal';
 import ColumnGrid from './components/ColumnGrid';
+import ReviewBoard from './components/ReviewBoard';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -118,7 +119,7 @@ export default function App() {
         {/* ── Main content ──────────────────────────────────────────────── */}
         <main
           className={`flex flex-1 overflow-hidden bg-white ${
-            activeTab === 1 && columns.length > 0
+            (activeTab === 1 && columns.length > 0) || activeTab === 2
               ? 'flex-col'
               : 'items-center justify-center'
           }`}
@@ -129,6 +130,8 @@ export default function App() {
             <p className="text-lg text-gray-400">
               Select a table from the sidebar to begin
             </p>
+          ) : activeTab === 2 ? (
+            <ReviewBoard onTabChange={tab => setActiveTab(tab as TabId)} />
           ) : (
             <p className="text-lg text-gray-400">{activeContent}</p>
           )}

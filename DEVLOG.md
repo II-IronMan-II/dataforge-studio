@@ -29,3 +29,7 @@ Clean build, zero errors.
 
                                                                                                                                                                       
 Resume this session with:                                                                                       claude --resume 1755efa5-468f-48af-955f-9f17f19a646e   
+
+Day 2 — Session 9 complete. Window 1 done.
+Column grid rendering, all transform controls 
+working, auto-save wired up.
