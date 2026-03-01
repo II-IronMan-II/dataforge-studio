@@ -15,3 +15,6 @@ compiler done. 21/21 tests passing.
 Day 1 — Sessions 1-4 complete. 21/21 tests passing.
 Backend models, file system, DuckDB executor, 
 template compiler all done. Resuming Session 5 tomorrow.
+
+Day 2 — Session 5 complete. LLM provider system done.
+30/30 tests passing.

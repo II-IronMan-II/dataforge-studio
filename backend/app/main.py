@@ -4,6 +4,7 @@ import logging
 import os
 from contextlib import asynccontextmanager
 
+import duckdb
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -23,6 +24,7 @@ async def lifespan(app: FastAPI):
     projects_dir = os.getenv("PROJECTS_DIR", "./projects")
     logger.info(f"LLM provider: {llm_provider}")
     logger.info(f"Projects directory: {projects_dir}")
+    logger.info(f"DuckDB version: {duckdb.__version__}")
     yield
 
 
